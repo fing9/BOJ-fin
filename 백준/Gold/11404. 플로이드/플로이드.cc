@@ -1,69 +1,68 @@
+#pragma warning(disable:4996)
 #include <iostream>
-#include <string>
 #include <algorithm>
-#include <vector>
 #include <utility>
-#include <queue>
-#include <stack>
-#include <map>
+#include <vector>
 #include <cmath>
+#include <stack>
+#include <cstdlib>
+#include <cstring>
+#include <queue>
+#include <deque>
 #define INF 987654321
+#define ll long long
 
 using namespace std;
 
-int graph[101][101];
 int dist[101][101];
+int N, M;
+int u, v, w;
 
-void init()
-{
-    for(int i=0;i<101;i++) {
-        for(int j=0;j<101;j++) {
-            if(i==j)
-                dist[i][j] = 0;
-            else
-                dist[i][j] = INF;
-            graph[i][j] = -1;
-        }
-    }
+void init() {
+	for (int i = 0; i < 101; i++) {
+		for (int j = 0; j < 101; j++) {
+			dist[i][j] = INF;
+		}
+	}
 }
 
-int main() {
-//    ios::sync_with_stdio(false);
-//    cin.tie(NULL);
-//    cout.tie(NULL);
+int main()
+{
+	init();
 
-    init();
+	scanf("%d\n%d", &N, &M);
 
-    int n, m;
-    scanf("%d", &n);
-    scanf("%d", &m);
-    for(int i=0;i<m;i++) {
-        int a, b, c;
-        scanf("%d %d %d", &a, &b, &c);
-        graph[a][b] = c;
-        if(c < dist[a][b])
-            dist[a][b] = c;
-    }
+	for (int i = 0; i < M; i++) {
+		scanf("%d %d %d", &u, &v, &w);
+		if (dist[u][v] != INF) {
+			if (dist[u][v] > w) {
+				dist[u][v] = w;
+			}
+		}
+		else {
+			dist[u][v] = w;
+		}
+	}
 
+	for (int k = 1; k <= N; k++) {
+		for (int i = 1; i <= N; i++) {
+			for (int j = 1; j <= N; j++) {
+				if (i == j) continue;
 
-    for(int m=1;m<=n;m++) {
-        for(int s=1;s<=n;s++) {
-            for(int e=1;e<=n;e++) {
-                if(dist[s][e] > dist[s][m] + dist[m][e])
-                    dist[s][e] = dist[s][m] + dist[m][e];
-            }
-        }
-    }
+				if (dist[i][j] > dist[i][k] + dist[k][j]) {
+					dist[i][j] = dist[i][k] + dist[k][j];
+				}
+			}
+		}
+	}
 
-    for(int i=1;i<=n;i++) {
-        for (int j = 1; j <= n; j++) {
-            if(dist[i][j] == INF)
-                printf("0 ");
-            else
-                printf("%d ", dist[i][j]);
-        }
-        printf("\n");
-    }
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= N; j++) {
+			if (dist[i][j] == INF) printf("0 ");
+			else printf("%d ", dist[i][j]);
+		}
+		printf("\n");
+	}
 
-    return 0;
+	return 0;
 }

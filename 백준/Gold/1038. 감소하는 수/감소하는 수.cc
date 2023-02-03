@@ -12,20 +12,8 @@ using namespace std;
 int N, cnt;
 ll ans = -1;
 
-bool test(ll num) {
-    ll first, last = -1;
-
-    while(num > 0) {
-        if(last != -1 && last+1 != num % 10) return false;
-        last = num % 10;
-        num /= 10;
-    }
-
-    if(last == 9) return true;
-    else return true;
-}
-
-void makeNum(ll num, int size) {
+void backTracking(ll num, int size)
+{
     if(size == 0) {
         if (cnt == N)
             ans = num;
@@ -39,21 +27,21 @@ void makeNum(ll num, int size) {
         ll nextNum = (num * 10) + i;
         if(num == 0 && i == 0) continue;
 
-        makeNum(nextNum, size - 1);
+        backTracking(nextNum, size - 1);
     }
 }
 
-void backTracking() {
+void solve() {
     for (int i = 0; i <= 10; i++)
     {
-        makeNum(0, i);
+        backTracking(0, i);
     }
 }
 
 int main() {
     scanf("%d", &N);
 
-    backTracking();
+    solve();
 
     printf("%lld", ans);
 
