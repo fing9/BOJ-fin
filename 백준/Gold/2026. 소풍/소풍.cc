@@ -9,7 +9,6 @@ int K, N, F;
 int counts[901];
 bool isFriend[901][901];
 bool visited[901];
-vector<vector<int>> graph(901);
 
 bool isPossible(int nbr, vector<int> team) {
     for (int i=0;i<team.size();i++) {
@@ -62,8 +61,6 @@ int main() {
     for (int i=0;i<F;i++) {
         int a, b;
         scanf("%d %d", &a, &b);
-        graph[a].push_back(b);
-        graph[b].push_back(a);
         isFriend[a][b] = true;
         isFriend[b][a] = true;
         counts[a]++;
